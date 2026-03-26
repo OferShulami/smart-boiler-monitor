@@ -1,44 +1,57 @@
 # Smart Boiler Status Monitor 🚿🔥
 
-An Arduino-based IoT solution designed to monitor the operational status of a water boiler using light detection and send real-time notifications to a smartphone via Bluetooth.
+An Arduino-based IoT solution designed to monitor the operational status of a water boiler using light detection and send real-time notifications to a smartphone via Bluetooth. 
 
-## 🌟 Overview
-This project addresses a common household inconvenience: forgetting the boiler is on or being unsure if the water is ready. By monitoring the boiler's physical indicator light with an LDR (Light Dependent Resistor), the system detects state changes and alerts the user immediately through the **Dabble** app.
+This project was born out of a practical need in a new apartment where the boiler control panel is located far from the living area, leading to unnecessary energy waste.
 
-## 🚀 Key Features
-* **Event-Driven Notifications:** The system tracks state changes using `previousLdrState` logic. This ensures that a notification is sent **only** when the boiler is actually toggled ON or OFF, preventing notification spam.
-* **Real-Time Smartphone Alerts:** Integration with the Dabble Notification module for push alerts with custom titles, descriptions, and emojis.
-* **Live System Monitoring:** Includes a serial terminal interface accessible via the Dabble app for real-time debugging and status logs.
-* **Energy Awareness:** Provides a simple way to monitor energy consumption remotely by tracking boiler activity.
+## 🌟 Key Features
+* **Event-Driven Notifications:** Uses `previousLdrState` logic to ensure alerts are sent **only** on state changes (ON/OFF), preventing notification spam.
+* **Intelligent Battery Monitoring:** Real-time tracking of the 9V power supply via a voltage divider to ensure system reliability.
+* **Remote Debugging:** Integrated serial terminal via the Dabble app for live logs and system status.
+* **Smartphone Integration:** Custom push notifications with emojis and status descriptions.
 
-## 🛠 Hardware Configuration
-* **Microcontroller:** Arduino Uno / Nano (or any Dabble-compatible board).
-* **Sensor:** LDR Sensor connected to **Digital Pin 2**.
-* **Connectivity:** HC-05/HC-06 Bluetooth Module.
-    * **TX** -> Pin 3 (RX)
-    * **RX** -> Pin 4 (TX)
-* **Logic Note:** In this configuration, a `LOW` signal represents light detection (Boiler ON), while a `HIGH` signal represents darkness (Boiler OFF).
+## 🔌 Hardware Configuration & Schematic
+The system is powered by an **Arduino Nano** and utilizes a Bluetooth module (HC-05/06) for wireless communication.
 
-## 💻 Software & Libraries
-1. **Dabble Library:** Required for communication between Arduino and the smartphone app.
-2. **Enabled Modules:**
-   * `INCLUDE_TERMINAL_MODULE`
-   * `INCLUDE_NOTIFICATION_MODULE`
+### Schematic Diagram
+![Circuit Schematic](schematic.jpeg)
+*The circuit includes an LDR sensor for light detection and a voltage divider for battery safety.*
 
-## 🧠 Core Logic Snippet
-The system's efficiency relies on detecting the **transition** between states rather than continuous polling:
+### Component List:
+* **Microcontroller:** Arduino Nano.
+* **Sensor:** LDR connected to **Analog Pin A0** (Pull-down with 10kΩ).
+* **Power:** 9V Battery connected to **Vin**.
+* **Battery Monitoring:** Voltage divider (2x 10kΩ resistors) connected to **Analog Pin A6**.
+* **Communication:** HC-05/06 Bluetooth Module.
 
+## 🧠 Technical Deep Dive
+
+### 1. Battery Sensing (Voltage Divider)
+Since the Arduino's analog pins can only handle up to 5V, we use two 10kΩ resistors in series to divide the 9V battery voltage by 2. This brings the input to a safe ~4.5V. 
+The code then reconstructs the actual voltage using the formula: 
+$$V_{actual} = (AnalogRead \times \frac{5.0}{1023}) \times 2$$
+
+### 2. Light Detection (LDR)
+Instead of simple digital HIGH/LOW, we use an analog threshold on pin **A0**. This allows the system to be calibrated for different ambient light levels or specific indicator light intensities.
+
+## 💻 Software Snippet: Battery & Status Logic
 ```cpp
-if (currentLdrState != previousLdrState) {
-    if (currentLdrState == HIGH) {
-        // Transition to Dark -> Boiler Light is OFF
-        Notification.setDescription("The BOILER is OFF 📴");
-        Notification.notify();
-    } else {
-        // Transition to Light -> Boiler Light is ON
-        Notification.setDescription("The BOILER is ON 🔥");
-        Notification.notify();
-    }
-    // Update state to prevent repetitive triggers
-    previousLdrState = currentLdrState;
+void loop() {
+  Dabble.processInput();
+  
+  // 1. Check Boiler Status
+  int ldrValue = analogRead(A0);
+  bool currentStatus = (ldrValue > 500); // Adjustable threshold
+
+  if (currentStatus != previousStatus) {
+    Notification.setDescription(currentStatus ? "Boiler is ON 🔥" : "Boiler is OFF 📴");
+    Notification.notify();
+    previousStatus = currentStatus;
+  }
+
+  // 2. Battery Health Check
+  float voltage = (analogRead(A6) * (5.0 / 1023.0)) * 2.0;
+  if (voltage < 7.0) {
+    Terminal.println("⚠️ Warning: Low Battery!");
+  }
 }

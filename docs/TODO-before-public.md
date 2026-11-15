@@ -1,6 +1,8 @@
 # Before making the ESP32-S3 version public
 
-Tick each item when done. When everything is ticked, follow "Publish day" below.
+> **Update (2026-11-15):** the repo was published early, before the hardware tests. The checklist below is now the list of tests to finish; the "work in progress" note stays in the README until it's done.
+
+Tick each item when done.
 
 ## Checklist
 
@@ -14,7 +16,7 @@ Tick each item when done. When everything is ticked, follow "Publish day" below.
 - [x] **7. Charging method decided:** take all cells out, charge them all equally, put them back (in README).
 - [ ] **8. Final README pass:** remove the "work in progress" note, check every link and that `docs/wiring.svg` renders on GitHub.
 
-## Publish day
+## Publish day ✅ (done 2026-11-15)
 
 1. Rename the repo to `smart-boiler-monitor` (GitHub redirects the old URL):
    ```

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 910 370" width="910" height="370" font-family="Helvetica, Arial, sans-serif">
+  <title>Smart Boiler Monitor wiring (ESP32-S3)</title>
+  <rect width="910" height="370" fill="#ffffff"/>
+
+  <g fill="#ffffff" stroke="#444444" stroke-width="1.5">
+    <rect x="20" y="70" width="180" height="230" rx="8"/>
+    <rect x="290" y="90" width="150" height="180" rx="8"/>
+    <rect x="530" y="70" width="170" height="240" rx="8"/>
+    <rect x="780" y="100" width="110" height="180" rx="8"/>
+  </g>
+  <g stroke-width="3" fill="none">
+    <line x1="180" y1="130" x2="290" y2="130" stroke="#d62828"/>
+    <line x1="180" y1="250" x2="290" y2="250" stroke="#222222"/>
+    <line x1="110" y1="160" x2="110" y2="220" stroke="#888888"/>
+    <line x1="440" y1="130" x2="530" y2="130" stroke="#d62828"/>
+    <line x1="440" y1="250" x2="530" y2="250" stroke="#222222"/>
+    <line x1="700" y1="170" x2="780" y2="170" stroke="#d62828"/>
+    <line x1="700" y1="210" x2="780" y2="210" stroke="#1d6fd6"/>
+    <line x1="700" y1="250" x2="780" y2="250" stroke="#222222"/>
+  </g>
+  <g fill="#f3f3f3" stroke="#888888" stroke-width="1">
+    <rect x="40" y="100" width="140" height="60" rx="5"/>
+    <rect x="40" y="220" width="140" height="60" rx="5"/>
+  </g>
+
+  <g fill="#222222" font-size="15" font-weight="bold" text-anchor="middle">
+    <text x="110" y="60">Battery 2S2P</text>
+    <text x="365" y="185">S09</text>
+    <text x="615" y="100">ESP32-S3</text>
+    <text x="835" y="125">Light</text>
+    <text x="835" y="142">sensor</text>
+  </g>
+  <g fill="#555555" font-size="12" text-anchor="middle">
+    <text x="110" y="126">2 × 18650</text>
+    <text x="110" y="142">in parallel</text>
+    <text x="110" y="246">2 × 18650</text>
+    <text x="110" y="262">in parallel</text>
+    <text x="128" y="195" text-anchor="start">series</text>
+    <text x="110" y="320">6.2–8.4 V, 7000 mAh</text>
+    <text x="365" y="203">buck-boost</text>
+    <text x="365" y="219">2.5–15 V → 3.3 V</text>
+    <text x="615" y="117">DevKit N16R8</text>
+    <text x="835" y="160">LM393 + LDR</text>
+  </g>
+
+  <g fill="#222222" font-size="12">
+    <text x="206" y="122">BAT+</text>
+    <text x="206" y="242">BAT−</text>
+    <text x="298" y="134">IN+</text>
+    <text x="298" y="254">IN−</text>
+    <text x="432" y="134" text-anchor="end">OUT 3.3V</text>
+    <text x="432" y="254" text-anchor="end">GND</text>
+    <text x="538" y="134">3V3</text>
+    <text x="538" y="254">GND</text>
+    <text x="692" y="174" text-anchor="end">3V3</text>
+    <text x="692" y="214" text-anchor="end">GPIO4</text>
+    <text x="692" y="254" text-anchor="end">GND</text>
+    <text x="788" y="174">VCC</text>
+    <text x="788" y="214">DO</text>
+    <text x="788" y="254">GND</text>
+  </g>
+
+  <g font-size="12" fill="#222222">
+    <line x1="290" y1="330" x2="320" y2="330" stroke="#d62828" stroke-width="3"/>
+    <text x="326" y="334">+ / 3.3 V</text>
+    <line x1="410" y1="330" x2="440" y2="330" stroke="#222222" stroke-width="3"/>
+    <text x="446" y="334">GND</text>
+    <line x1="500" y1="330" x2="530" y2="330" stroke="#1d6fd6" stroke-width="3"/>
+    <text x="536" y="334">signal (wakeup)</text>
+    <text x="455" y="358" text-anchor="middle" fill="#b00020">Feed 3.3 V into the 3V3 pin, not 5V. Disconnect the battery before flashing over USB.</text>
+  </g>
+</svg>

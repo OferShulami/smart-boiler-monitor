@@ -35,7 +35,7 @@
 #define TX_POWER         WIFI_POWER_11dBm
 
 // Timing
-#define REMINDER_MIN     60       // reminder interval while boiler is ON
+#define REMINDER_MIN     30       // reminder interval while boiler is ON
 #define ALIVE_H          24       // "alive" message interval (and the longest sleep)
 #define RETRY_MIN        2        // retry interval if WiFi / sending failed
 #define STABLE_MS        1500     // light must be stable this long (filters flicker)

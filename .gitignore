@@ -1,0 +1,11 @@
+# Secrets (WiFi password, ntfy topic) — copy secrets.example.h to secrets.h
+secrets.h
+
+# Private session notes
+*handoff*.md
+
+# Build output
+build/
+
+# macOS
+.DS_Store

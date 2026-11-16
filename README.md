@@ -4,8 +4,6 @@ A battery-powered ESP32-S3 device that watches the boiler's indicator light and 
 
 The boiler control panel in my apartment is far from the living area, so it's easy to forget the boiler running and waste electricity. This device sits next to the panel and tells me.
 
-> **Status:** work in progress — the code has not been tested on hardware yet. See [docs/TODO-before-public.md](docs/TODO-before-public.md).
-
 ## Features
 
 - **Instant detection:** the ESP32-S3 sleeps in deep sleep and wakes the moment the indicator light changes (ext0 wakeup on the light sensor's digital output).
